@@ -9,7 +9,12 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class RideMyShare extends AppCompatActivity {
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.ActivityRecognition;
+
+
+public class RideMyShare extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +31,33 @@ public class RideMyShare extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        // Google services api
+        GoogleApiClient mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(ActivityRecognition.API)
+                .addConnectionCallbacks(this);
+                .build();
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        // The connection has been interrupted.
+        // Disable any UI components that depend on Google APIs
+        // until onConnected() is called.
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        // This callback is important for handling errors that
+        // may occur while attempting to connect with Google.
+    }
+
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        // Connected to Google Play services!
+        // The good stuff goes here.
     }
 
     @Override
